@@ -120,8 +120,42 @@ document.addEventListener('DOMContentLoaded', async function () {
             imagePreview.style.display = 'none';
         }
 
+        setupAIAssistant(linkData);
         expandedView.classList.add('active');
         document.body.style.overflow = 'hidden';
+    }
+
+    // Setup AI assistant with link data
+    function setupAIAssistant(linkData) {
+        document.getElementById('ai-prompt').dataset.linkId = linkData.id;
+        generateAIResponse(linkData);
+    }
+
+    // Mock AI response (works without backend)
+    async function generateAIResponse(linkData, followUp = null) {
+        const aiResponse = document.getElementById('ai-response');
+        
+        // Show loading state
+        aiResponse.innerHTML = `
+            <div class="thinking">
+                <div class="loading-spinner"></div>
+                <p>Thinking about this link...</p>
+            </div>
+        `;
+        
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Generate mock response
+        const mockResponse = followUp 
+            ? `Regarding your question about "${followUp}" for ${linkData.title}: This is a simulated response since we're on GitHub Pages. In a production environment, this would connect to a real AI service.`
+            : `About ${linkData.title}: This is a ${linkData.category.toLowerCase()} platform. ${linkData.description || 'No additional description available.'} [Mock AI Response]`;
+        
+        aiResponse.innerHTML = `
+            <div class="ai-message">
+                ${mockResponse.replace(/\n/g, '<br>')}
+            </div>
+        `;
     }
 
     // ======================
@@ -254,6 +288,21 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.error('Error saving link:', error);
             alert('Failed to save link. Please check console for details.');
         }
+    });
+
+    // AI prompt submission
+    document.getElementById('send-ai-prompt').addEventListener('click', async () => {
+        const promptInput = document.getElementById('ai-prompt');
+        const prompt = promptInput.value.trim();
+        const linkId = parseInt(promptInput.dataset.linkId);
+
+        if (!prompt) return;
+
+        const linkData = links.find(link => link.id === linkId);
+        if (!linkData) return;
+
+        promptInput.value = '';
+        generateAIResponse(linkData, prompt);
     });
 
     // ======================
