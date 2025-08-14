@@ -11,7 +11,6 @@
     {
         "id": 2,
         "title": "Twitter",
-        "title": "Twitter",
         "url": "https://twitter.com",
         "description": "Social media platform for news and networking",
         "icon": "fab fa-twitter",
