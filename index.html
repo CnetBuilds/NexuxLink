@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <script src="https://js.puter.com/v2/"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusLink - Premium Link Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <script src="https://js.puter.com/v2/"></script>
+
+
+    <!-- Animated Background -->
+    <div class="bg-bubbles">
+        <div class="bubble x1"></div>
+        <div class="bubble x2"></div>
+        <div class="bubble x3"></div>
+        <div class="bubble x4"></div>
+        <div class="bubble x5"></div>
+        <div class="bubble x6"></div>
+        <div class="bubble x7"></div>
+        <div class="bubble x8"></div>
+        <div class="bubble x9"></div>
+        <div class="bubble x10"></div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="glass-header">
+            <div class="logo">
+                <i class="fas fa-link"></i>
+                <h1>Nexus<span>Link</span></h1>
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Search links..." class="glass-search">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <button id="admin-toggle" class="glass-button pulse">
+                <i class="fas fa-lock"></i> Admin
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="content">
+            <section class="links-container">
+                <!-- Links will be dynamically inserted here -->
+            </section>
+
+
+
+            <!-- Expanded Link View -->
+            <div class="expanded-view-overlay">
+                <div class="expanded-view glass-panel">
+                    <button class="close-expanded glass-button">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                    <div class="expanded-content">
+                        <div class="link-details">
+                            <div class="expanded-icon">
+                                <i id="expanded-icon" class="fas fa-link"></i>
+                            </div>
+                            <h2 id="expanded-title">Link Title</h2>
+                            <div class="link-meta">
+                                <span id="expanded-category" class="link-category">Category</span>
+                                <a id="expanded-url" href="#" target="_blank" class="glass-button">
+                                    <i class="fas fa-external-link-alt"></i> Visit Site
+                                </a>
+                            </div>
+                            <p id="expanded-description" class="expanded-desc">Description will appear here...</p>
+                            <div class="link-image-preview">
+                                <img id="link-preview-image" src="" alt="Link preview">
+                                <div class="image-loading">
+                                    <div class="loading-spinner"></div>
+                                    <p>Generating preview...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ai-assistant">
+                            <div class="ai-header">
+                                <i class="fas fa-robot"></i>
+                                <h3>AI Assistant</h3>
+                            </div>
+                            <div class="ai-disclaimer">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>AI-generated content may contain inaccuracies. Verify critical information.</p>
+                            </div>
+                            <div id="ai-response" class="ai-response">
+                                <div class="thinking">
+                                    <div class="loading-spinner"></div>
+                                    <p>Thinking about this link...</p>
+                                </div>
+                            </div>
+                            <div class="ai-chat">
+                                <textarea id="ai-prompt"
+                                    placeholder="Ask the AI anything about this link..."></textarea>
+                                <button id="send-ai-prompt" class="glass-button">
+                                    <i class="fas fa-paper-plane"></i> Send
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </main>
+    </div>
+
+    <!-- Admin Panel (Initially Hidden) -->
+    <div class="admin-overlay">
+        <div class="admin-panel glass-panel">
+            <div class="admin-header">
+                <h2><i class="fas fa-user-shield"></i> Admin Dashboard</h2>
+                <button class="close-admin glass-button">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="add-link">Add Link</button>
+                <button class="tab-btn" data-tab="manage-links">Manage Links</button>
+                <button class="tab-btn" data-tab="appearance">Appearance</button>
+            </div>
+
+            <div class="tab-content active" id="add-link">
+                <form id="add-link-form">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="glass-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input type="url" class="glass-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="glass-input" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Icon (Font Awesome class)</label>
+                        <input type="text" class="glass-input" placeholder="fab fa-github">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="glass-input">
+                            <option>Social</option>
+                            <option>Work</option>
+                            <option>Entertainment</option>
+                            <option>Utilities</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="glass-button submit-btn">
+                        <i class="fas fa-plus"></i> Add Link
+                    </button>
+                </form>
+            </div>
+
+            <div class="tab-content" id="manage-links">
+                <div class="link-list">
+                    <!-- Links will be listed here for management -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="appearance">
+                <h3>Theme Customization</h3>
+                <div class="theme-options">
+                    <div class="theme-option" data-theme="dark">
+                        <div class="theme-preview dark-theme"></div>
+                        <span>Dark</span>
+                    </div>
+                    <div class="theme-option" data-theme="purple">
+                        <div class="theme-preview purple-theme"></div>
+                        <span>Purple</span>
+                    </div>
+                    <div class="theme-option" data-theme="blue">
+                        <div class="theme-preview blue-theme"></div>
+                        <span>Blue</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="glass-footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>NexusLink</h3>
+                <p>Premium Link Management System</p>
+                <div class="footer-meta">
+                    <span>© <span class="year"></span> All Rights Reserved</span>
+                    <span>Developed with <i class="fas fa-heart"></i> by You</span>
+                </div>
+            </div>
+            <div class="footer-links">
+                <p>Want to suggest a useful link?</p>
+                <a href="https://wa.me/yournumber" class="glass-button whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Contact Developer
+                </a>
+            </div>
+        </div>
+        <div class="footer-bubbles">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+    </footer>
+
+
+
+
+
+
+</body>
+
+</html>
