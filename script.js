@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
-    // Open expanded view
+    // Open expanded view with proper image loading
     function openExpandedView(linkData) {
         document.getElementById('expanded-icon').className = linkData.icon;
         document.getElementById('expanded-title').textContent = linkData.title;
@@ -112,48 +112,71 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('expanded-url').href = linkData.url;
         document.getElementById('expanded-description').textContent = linkData.description;
 
-        const imagePreview = document.getElementById('link-preview-image');
-        if (linkData.imageUrl) {
-            imagePreview.src = linkData.imageUrl;
-            imagePreview.style.display = 'block';
+        const imageContainer = document.getElementById('link-preview-image');
+        
+        // Set up loading state
+        imageContainer.innerHTML = `
+            <div class="image-loading">
+                <div class="loading-spinner"></div>
+                <p>Loading image...</p>
+            </div>
+        `;
+        imageContainer.classList.remove('has-image');
+
+        // Load image if available
+        if (linkData.imageUrl && linkData.imageUrl.trim() !== '') {
+            const img = new Image();
+            img.onload = function() {
+                imageContainer.innerHTML = '';
+                imageContainer.appendChild(img);
+                imageContainer.classList.add('has-image');
+            };
+            img.onerror = function() {
+                imageContainer.querySelector('.image-loading p').textContent = 'Image unavailable';
+            };
+            img.src = linkData.imageUrl;
         } else {
-            imagePreview.style.display = 'none';
+            imageContainer.querySelector('.image-loading p').textContent = 'No image available';
         }
 
+        // Set up AI assistant
         setupAIAssistant(linkData);
+
         expandedView.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 
-    // Setup AI assistant with link data
+    // Setup AI assistant with mock responses
     function setupAIAssistant(linkData) {
-        document.getElementById('ai-prompt').dataset.linkId = linkData.id;
-        generateAIResponse(linkData);
-    }
-
-    // Mock AI response (works without backend)
-    async function generateAIResponse(linkData, followUp = null) {
         const aiResponse = document.getElementById('ai-response');
-        
-        // Show loading state
         aiResponse.innerHTML = `
             <div class="thinking">
                 <div class="loading-spinner"></div>
-                <p>Thinking about this link...</p>
+                <p>Analyzing link information...</p>
             </div>
         `;
         
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        document.getElementById('ai-prompt').dataset.linkId = linkData.id;
         
-        // Generate mock response
+        // Simulate AI response after delay
+        setTimeout(() => {
+            generateAIResponse(linkData);
+        }, 1500);
+    }
+
+    // Generate mock AI response
+    async function generateAIResponse(linkData, followUp = null) {
+        const aiResponse = document.getElementById('ai-response');
+        
+        // Create mock response based on link data
         const mockResponse = followUp 
-            ? `Regarding your question about "${followUp}" for ${linkData.title}: This is a simulated response since we're on GitHub Pages. In a production environment, this would connect to a real AI service.`
-            : `About ${linkData.title}: This is a ${linkData.category.toLowerCase()} platform. ${linkData.description || 'No additional description available.'} [Mock AI Response]`;
+            ? `Regarding your question about "${followUp}" for ${linkData.title}: This is a simulated response. In a production environment, this would connect to an AI service.`
+            : `About ${linkData.title}: This appears to be a ${linkData.category.toLowerCase()} resource. ${linkData.description || 'No additional description available.'}`;
         
         aiResponse.innerHTML = `
             <div class="ai-message">
                 ${mockResponse.replace(/\n/g, '<br>')}
+                <small class="mock-notice">[Mock AI Response]</small>
             </div>
         `;
     }
@@ -168,7 +191,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (linkCard) {
             const linkId = parseInt(linkCard.dataset.id);
             const linkData = links.find(link => link.id === linkId);
-            if (linkData) openExpandedView(linkData);
+            if (linkData) {
+                openExpandedView(linkData);
+            }
         }
     });
 
@@ -189,6 +214,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         tab.addEventListener('click', () => {
             adminTabs.forEach(t => t.classList.remove('active'));
             tabContents.forEach(c => c.classList.remove('active'));
+            
             tab.classList.add('active');
             document.getElementById(tab.dataset.tab).classList.add('active');
         });
