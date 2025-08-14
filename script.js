@@ -1,14 +1,4 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    // Initialize Puter if available
-    if (typeof puter !== 'undefined') {
-        try {
-            await puter.init();
-            console.log('Puter initialized successfully');
-        } catch (error) {
-            console.error('Error initializing Puter:', error);
-        }
-    }
-
     // ======================
     // 1. GLOBAL VARIABLES
     // ======================
@@ -29,125 +19,51 @@ document.addEventListener('DOMContentLoaded', async function () {
     // 2. CORE FUNCTIONS
     // ======================
 
-    // Get default links if file doesn't exist
-    function getDefaultLinks() {
-        return [
-            {
-                id: Date.now(),
-                title: "GitHub",
-                url: "https://github.com",
-                description: "Code repository and version control platform",
-                icon: "fab fa-github",
-                category: "Development",
-                imageUrl: ""
-            },
-            {
-                id: Date.now() + 1,
-                title: "Twitter",
-                url: "https://twitter.com",
-                description: "Social media platform for news and networking",
-                icon: "fab fa-twitter",
-                category: "Social",
-                imageUrl: ""
-            }
-        ];
-    }
-
-    // Modified saveLinksToFile function
+    // Save links to text file on server
     async function saveLinksToFile() {
         try {
-            // For Puter's storage system
-            if (typeof puter !== 'undefined' && puter.fs) {
-                try {
-                    await puter.fs.writeFile(DB_FILE, JSON.stringify(links, null, 2));
-                    console.log('Saved to Puter storage');
-                    return true;
-                } catch (error) {
-                    console.error('Puter save error:', error);
-                    throw error; // Fall through to other methods
-                }
-            }
+            const response = await fetch('save_links.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    links: links,
+                    action: 'save'
+                })
+            });
 
-            // For server environment
-            try {
-                const response = await fetch('save_links.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        links: links,
-                        action: 'save'
-                    })
-                });
-
-                if (response.ok) {
-                    console.log('Saved to server file');
-                    return true;
-                }
-                throw new Error('Server save failed');
-            } catch (serverError) {
-                console.warn('Server save failed, falling back to localStorage:', serverError);
-                localStorage.setItem('nexusLinks', JSON.stringify(links));
-                console.log('Saved to localStorage');
-                return true;
+            if (!response.ok) {
+                throw new Error('Failed to save links');
             }
+            return true;
         } catch (error) {
-            console.error('All save methods failed:', error);
+            console.error('Error saving links:', error);
+            alert('Error saving links. Please check console for details.');
             return false;
         }
     }
 
-    // Modified loadLinksFromFile function
+    // Load links from text file on server
     async function loadLinksFromFile() {
         try {
-            // Try Puter's storage first
-            if (typeof puter !== 'undefined' && puter.fs) {
-                try {
-                    const content = await puter.fs.readFile(DB_FILE);
-                    links = JSON.parse(content);
-                    console.log('Loaded from Puter storage');
-                    return;
-                } catch (error) {
-                    console.warn('Failed to load from Puter, trying other methods:', error);
-                }
+            const response = await fetch(DB_FILE);
+            if (!response.ok) {
+                throw new Error('Failed to load links');
             }
 
-            // Try regular server
-            try {
-                const response = await fetch(DB_FILE);
-                if (response.ok) {
-                    const text = await response.text();
-                    if (text.trim()) {
-                        links = JSON.parse(text);
-                        console.log('Loaded from server file');
-                        return;
-                    }
-                }
-            } catch (error) {
-                console.warn('Failed to load from server file:', error);
+            const text = await response.text();
+            if (!text.trim()) {
+                throw new Error('Database file is empty');
             }
 
-            // Fallback to localStorage
-            try {
-                const localLinks = localStorage.getItem('nexusLinks');
-                if (localLinks) {
-                    links = JSON.parse(localLinks);
-                    console.log('Loaded from localStorage');
-                    return;
-                }
-            } catch (error) {
-                console.warn('Failed to load from localStorage:', error);
-            }
-
-            // Default links if nothing else works
-            links = getDefaultLinks();
-            console.log('Loaded default links');
+            links = JSON.parse(text);
+            renderLinks();
         } catch (error) {
             console.error('Error loading links:', error);
-            links = getDefaultLinks();
-        } finally {
+            links = [];
             renderLinks();
+            alert('Error loading links. Please check console for details.');
         }
     }
 
@@ -204,71 +120,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             imagePreview.style.display = 'none';
         }
 
-        setupAIAssistant(linkData);
         expandedView.classList.add('active');
         document.body.style.overflow = 'hidden';
-    }
-
-    // Setup AI assistant with link data
-    function setupAIAssistant(linkData) {
-        const aiResponse = document.getElementById('ai-response');
-        aiResponse.innerHTML = `
-            <div class="thinking">
-                <div class="loading-spinner"></div>
-                <p>Thinking about this link...</p>
-            </div>
-        `;
-
-        document.getElementById('ai-prompt').dataset.linkId = linkData.id;
-        setTimeout(() => {
-            generateAIResponse(linkData);
-        }, 1500);
-    }
-
-    // Generate AI response using Puter API
-    async function generateAIResponse(linkData, followUp = null) {
-        const aiResponse = document.getElementById('ai-response');
-
-        try {
-            const prompt = followUp
-                ? `Tell me more about: ${followUp} regarding ${linkData.title} (${linkData.url}). Description: ${linkData.description}`
-                : `Tell me about ${linkData.title} (${linkData.url}). Category: ${linkData.category}. Description: ${linkData.description}`;
-
-            // Using Puter's AI API
-            const response = await fetch('https://api.puter.com/v1/ai/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    prompt: prompt,
-                    max_tokens: 500
-                })
-            });
-
-            if (!response.ok) throw new Error(`API error: ${response.status}`);
-
-            const data = await response.json();
-
-            if (data.response) {
-                aiResponse.innerHTML = `
-                    <div class="ai-message">
-                        ${data.response.replace(/\n/g, '<br>')}
-                    </div>
-                `;
-            } else {
-                throw new Error('Unexpected API response format');
-            }
-        } catch (error) {
-            console.error('AI Error:', error);
-            aiResponse.innerHTML = `
-                <div class="ai-error">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <p>Failed to get AI response. Please try again later.</p>
-                    ${error.message ? `<small>Error: ${error.message}</small>` : ''}
-                </div>
-            `;
-        }
     }
 
     // ======================
@@ -339,7 +192,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Add link form submission
     addLinkForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-
+        
         const formData = new FormData(addLinkForm);
         const title = formData.get('title');
         const url = formData.get('url');
@@ -356,19 +209,21 @@ document.addEventListener('DOMContentLoaded', async function () {
                 // Update existing link
                 const id = parseInt(submitBtn.dataset.editingId);
                 const index = links.findIndex(link => link.id === id);
-
+                
                 if (index !== -1) {
                     links[index] = { id, title, url, description, icon, category, imageUrl };
-                    await saveLinksToFile();
-                    renderLinks();
-                    renderLinkList();
-
-                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Link Updated!';
-                    setTimeout(() => {
-                        submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Link';
-                        delete submitBtn.dataset.editingId;
-                        addLinkForm.reset();
-                    }, 2000);
+                    const success = await saveLinksToFile();
+                    
+                    if (success) {
+                        renderLinks();
+                        renderLinkList();
+                        submitBtn.innerHTML = '<i class="fas fa-check"></i> Link Updated!';
+                        setTimeout(() => {
+                            submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Link';
+                            delete submitBtn.dataset.editingId;
+                            addLinkForm.reset();
+                        }, 2000);
+                    }
                 }
             } else {
                 // Add new link
@@ -381,37 +236,24 @@ document.addEventListener('DOMContentLoaded', async function () {
                     category,
                     imageUrl
                 };
-
+                
                 links.push(newLink);
-                await saveLinksToFile();
-                renderLinks();
-                renderLinkList();
-
-                submitBtn.innerHTML = '<i class="fas fa-check"></i> Link Added!';
-                setTimeout(() => {
-                    submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Link';
-                    addLinkForm.reset();
-                }, 2000);
+                const success = await saveLinksToFile();
+                
+                if (success) {
+                    renderLinks();
+                    renderLinkList();
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Link Added!';
+                    setTimeout(() => {
+                        submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Link';
+                        addLinkForm.reset();
+                    }, 2000);
+                }
             }
         } catch (error) {
             console.error('Error saving link:', error);
             alert('Failed to save link. Please check console for details.');
         }
-    });
-
-    // AI prompt submission
-    document.getElementById('send-ai-prompt').addEventListener('click', async () => {
-        const promptInput = document.getElementById('ai-prompt');
-        const prompt = promptInput.value.trim();
-        const linkId = parseInt(promptInput.dataset.linkId);
-
-        if (!prompt) return;
-
-        const linkData = links.find(link => link.id === linkId);
-        if (!linkData) return;
-
-        promptInput.value = '';
-        generateAIResponse(linkData, prompt);
     });
 
     // ======================
