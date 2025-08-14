@@ -34,30 +34,33 @@
         "title": "Qwen AI",
         "url": "https://chat.qwen.ai",
         "description": "AI chatbot. Known for free to use powerful Website development (coding) AI robot.",
-        "icon": "fa-solid fa-microchip-ai",
+        "icon": "fab fa-microchip-ai",
         "category": "Utilities, Development",
         "imageUrl": "https://cdn.autonomous.ai/production/ecm/241116/qwen-model-1.webp"
     },
+
     {
         "id": 5,
         "title": "Kimi AI",
         "url": "https://www.kimi.com/",
         "description": "An open‑source trillion‑parameter MoE model, smarter coding, and agentic task automation. Kimi-K2 is one of the few truly open large models available. You can try it right now without a paywall.",
-        "icon": "fa-solid fa-microchip-ai",
+        "icon": "fab fa-microchip-ai",
         "category": "Utilities, Development, Social, Work",
         "imageUrl": "https://cdn.analyticsvidhya.com/wp-content/uploads/2025/07/Kimi-.webp"
     },
+
     {
         "id": 6,
         "title": "VideoEffects",
         "url": "https://videoeffects.com/",
         "description": "Website where a lot of video effects and techniques are available.",
-        "icon": "fa-solid fa-clapperboard",
+        "icon": "fab fa-clapperboard",
         "category": "Utilities, Development, Social",
         "imageUrl": "https://cdn.videoeffects.com/templates/instagram-profile-banner-grid-7-dark/preview/8f02c901-5699-479e-9023-410a3522f8a1/preview_snapshot_grid.jpg"
-    },
+    }
 
 ]
+
 
 
 
