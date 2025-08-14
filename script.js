@@ -125,17 +125,21 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Load image if available
         if (linkData.imageUrl && linkData.imageUrl.trim() !== '') {
-            const img = new Image();
-            img.onload = function() {
-                imageContainer.innerHTML = '';
-                imageContainer.appendChild(img);
-                imageContainer.classList.add('has-image');
-            };
-            img.onerror = function() {
-                imageContainer.querySelector('.image-loading p').textContent = 'Image unavailable';
-            };
-            img.src = linkData.imageUrl;
-        } else {
+    const img = new Image();
+    img.onload = function() {
+        imageContainer.innerHTML = '';
+        imageContainer.appendChild(img);
+        imageContainer.classList.add('has-image'); // This matches CSS
+    };
+    img.onerror = function() {
+        imageContainer.innerHTML = `
+            <div class="image-error">
+                <p>Image unavailable</p>
+            </div>
+        `;
+    };
+    img.src = linkData.imageUrl;
+} else {
             imageContainer.querySelector('.image-loading p').textContent = 'No image available';
         }
 
@@ -485,4 +489,5 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     });
 });
+
 
