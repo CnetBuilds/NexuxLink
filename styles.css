@@ -674,7 +674,7 @@ body {
 }
 
 .link-image-preview img.loaded ~ .image-loading {
-    opacity: 0;
+    opacity: 50;
     pointer-events: none;
 }
 
@@ -1006,3 +1006,4 @@ body {
         padding: 0.5rem;
     }
 }
+
