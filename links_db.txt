@@ -1,40 +1,63 @@
 [
     {
         "id": 1,
-        "title": "GitHub",
-        "url": "https://github.com",
-        "description": "Code repository and version control platform",
-        "icon": "fab fa-github",
-        "category": "Development",
-        "imageUrl": ""
+        "title": "DeepSite",
+        "url": "https://enzostvs-deepsite.hf.space/",
+        "description": "Web development tool that helps you build websites with AI, no code required.",
+        "icon": "fa-solid fa-microchip-ai",
+        "category": "Utilities, Work",
+        "imageUrl": "https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ft4wrvr0as0yx7wookj9e.png"
     },
+
     {
         "id": 2,
-        "title": "Twitter",
-        "url": "https://twitter.com",
-        "description": "Social media platform for news and networking",
-        "icon": "fab fa-twitter",
-        "category": "Social",
-        "imageUrl": ""
+        "title": "Firebase Studio",
+        "url": "https://github.com",
+        "description": "A cloud-based, agentic development environment designed to accelerate how you build, test, deploy and run production-quality AI applications, all in one place.",
+        "icon": "fab fa-github",
+        "category": "Utilities, Development, Work",
+        "imageUrl": "https://rstr.in/google/firebase-studio/jeRsLd9j3NZ"
     },
+
     {
         "id": 3,
         "title": "Deepseek",
         "url": "https://chat.deepseek.com",
         "description": "AI chatbot. Free to use friendly and inteligence.",
-        "icon": "link",
-        "category": "Utility, Development, Social",
+        "icon": "fa-solid fa-microchip-ai",
+        "category": "Utilities, Development, Social",
         "imageUrl": "https://b2729162.smushcdn.com/2729162/wp-content/uploads/2025/01/DeepSeek.jpg?lossy=1&strip=1&webp=1"
     },
+
     {
         "id": 4,
         "title": "Qwen AI",
         "url": "https://chat.qwen.ai",
         "description": "AI chatbot. Known for free to use powerful Website development (coding) AI robot.",
-        "icon": "link",
-        "category": "Utility, Development",
+        "icon": "fa-solid fa-microchip-ai",
+        "category": "Utilities, Development",
         "imageUrl": "https://cdn.autonomous.ai/production/ecm/241116/qwen-model-1.webp"
     }
+    {
+        "id": 5,
+        "title": "Kimi AI",
+        "url": "https://www.kimi.com/",
+        "description": "An open‑source trillion‑parameter MoE model, smarter coding, and agentic task automation. Kimi-K2 is one of the few truly open large models available. You can try it right now without a paywall.",
+        "icon": "fa-solid fa-microchip-ai",
+        "category": "Utilities, Development, Social, Work",
+        "imageUrl": "https://cdn.analyticsvidhya.com/wp-content/uploads/2025/07/Kimi-.webp"
+    },
+    {
+        "id": 6,
+        "title": "VideoEffects",
+        "url": "https://videoeffects.com/",
+        "description": "Website where a lot of video effects and techniques are available.",
+        "icon": "fa-solid fa-clapperboard",
+        "category": "Utilities, Development, Social",
+        "imageUrl": "https://cdn.videoeffects.com/templates/instagram-profile-banner-grid-7-dark/preview/8f02c901-5699-479e-9023-410a3522f8a1/preview_snapshot_grid.jpg"
+    },
+
 ]
+
 
 
