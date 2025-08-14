@@ -1,0 +1,21 @@
+[
+    {
+        "id": 1,
+        "title": "GitHub",
+        "url": "https://github.com",
+        "description": "Code repository and version control platform",
+        "icon": "fab fa-github",
+        "category": "Development",
+        "imageUrl": ""
+    },
+    {
+        "id": 2,
+        "title": "Twitter",
+        "title": "Twitter",
+        "url": "https://twitter.com",
+        "description": "Social media platform for news and networking",
+        "icon": "fab fa-twitter",
+        "category": "Social",
+        "imageUrl": ""
+    }
+]
