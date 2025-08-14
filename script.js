@@ -170,13 +170,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         
         // Create mock response based on link data
         const mockResponse = followUp 
-            ? `Regarding your question about "${followUp}" for ${linkData.title}: This is a simulated response. In a production environment, this would connect to an AI service.`
+            ? `Regarding your question about "${followUp}" for ${linkData.title}: THIS FEATURE IS STILL UNDER DEVELOPMENT, this would connect to an AI service.`
             : `About ${linkData.title}: This appears to be a ${linkData.category.toLowerCase()} resource. ${linkData.description || 'No additional description available.'}`;
         
         aiResponse.innerHTML = `
             <div class="ai-message">
                 ${mockResponse.replace(/\n/g, '<br>')}
-                <small class="mock-notice">[Mock AI Response]</small>
+                <small class="mock-notice">[Automated Response]</small>
             </div>
         `;
     }
@@ -485,3 +485,4 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     });
 });
+
