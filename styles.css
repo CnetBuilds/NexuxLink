@@ -1049,7 +1049,7 @@ body {
 .developer-link {
     display: inline-flex;
     align-items: center;
-    gap: 0rem;
+    gap: 0.5rem;
     color: inherit;
     text-decoration: none;
     transition: opacity 0.2s;
@@ -1066,5 +1066,6 @@ body {
     object-fit: cover;
     border: 1px solid var(--glass-border);
 }
+
 
 
