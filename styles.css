@@ -648,15 +648,19 @@ body {
     margin: 1.5rem 0;
 }
 
+/* Default state - hidden */
 .link-image-preview img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: relative;
 }
 
-.link-image-preview img.loaded {
-    display: block;
+/* Visible state */
+.link-image-preview.has-image img {
+    opacity: 1;
 }
 
 .image-loading {
@@ -673,8 +677,8 @@ body {
     transition: opacity 0.3s ease;
 }
 
-.link-image-preview img.loaded ~ .image-loading {
-    opacity: 50;
+.link-image-preview.has-image .image-loading {
+    opacity: 0;
     pointer-events: none;
 }
 
@@ -1006,4 +1010,5 @@ body {
         padding: 0.5rem;
     }
 }
+
 
