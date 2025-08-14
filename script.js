@@ -112,29 +112,12 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('expanded-url').href = linkData.url;
         document.getElementById('expanded-description').textContent = linkData.description;
 
-        
         const imagePreview = document.getElementById('link-preview-image');
-        const loadingElement = imagePreview.querySelector('.image-loading');
-
-        imagePreview.classList.remove('loaded');
-        loadingElement.style.opacity = '1';
-        loadingElement.style.pointerEvents = 'auto';
-        
-            if (linkData.imageUrl) {
-        const img = new Image();
-            img.src = linkData.imageUrl;
-            img.classList.add('loaded');
-            img.onload = function() {
-                imagePreview.innerHTML = '';
-                imagePreview.appendChild(img);
-                imagePreview.appendChild(loadingElement);
-                imagePreview.classList.add('loaded');
-            };
-            img.onerror = function() {
-            loadingElement.innerHTML = '<p>Image failed to load</p>';
-            };
+        if (linkData.imageUrl) {
+            imagePreview.src = linkData.imageUrl;
+            imagePreview.style.display = 'block';
         } else {
-            imagePreview.innerHTML = '<div class="image-loading"><p>No image available</p></div>';
+            imagePreview.style.display = 'none';
         }
 
         setupAIAssistant(linkData);
@@ -476,5 +459,3 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     });
 });
-
-
