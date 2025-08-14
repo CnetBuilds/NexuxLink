@@ -695,10 +695,6 @@ body {
 }
 
 
-.thinking p {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-}
 
 /* AI Assistant */
 .ai-assistant {
@@ -1013,5 +1009,6 @@ body {
         padding: 0.5rem;
     }
 }
+
 
 
