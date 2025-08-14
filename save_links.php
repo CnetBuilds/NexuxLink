@@ -1,5 +1,4 @@
 <?php
-// Allow CORS if needed
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
@@ -10,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (isset($input['links'])) {
         $data = json_encode($input['links'], JSON_PRETTY_PRINT);
-        if (file_put_contents($file, $data) !== false) {
+        if (file_put_contents($file, $data) {
             echo json_encode(['success' => true]);
         } else {
             http_response_code(500);
