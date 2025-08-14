@@ -22,7 +22,7 @@
         "title": "Deepseek",
         "url": "https://chat.deepseek.com",
         "description": "AI chatbot. Free to use friendly and inteligence.",
-        "icon": "fab fa-link",
+        "icon": "link",
         "category": "Utility, Development, Social",
         "imageUrl": "https://b2729162.smushcdn.com/2729162/wp-content/uploads/2025/01/DeepSeek.jpg?lossy=1&strip=1&webp=1"
     },
@@ -31,9 +31,10 @@
         "title": "Qwen AI",
         "url": "https://chat.qwen.ai",
         "description": "AI chatbot. Known for free to use powerful Website development (coding) AI robot.",
-        "icon": "fab fa-link",
+        "icon": "link",
         "category": "Utility, Development",
         "imageUrl": "https://cdn.autonomous.ai/production/ecm/241116/qwen-model-1.webp"
     }
 ]
+
 
