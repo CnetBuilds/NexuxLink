@@ -37,7 +37,7 @@
         "icon": "fa-solid fa-microchip-ai",
         "category": "Utilities, Development",
         "imageUrl": "https://cdn.autonomous.ai/production/ecm/241116/qwen-model-1.webp"
-    }
+    },
     {
         "id": 5,
         "title": "Kimi AI",
@@ -58,6 +58,7 @@
     },
 
 ]
+
 
 
 
