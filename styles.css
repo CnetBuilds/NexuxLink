@@ -1012,3 +1012,58 @@ body {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Footer Layout */
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.footer-suggest {
+    text-align: right;
+    margin-left: auto;
+}
+
+.footer-suggest p {
+    margin-bottom: 0.5rem;
+}
+
+/* Developer Profile Link */
+.developer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.developer-link:hover {
+    opacity: 0.8;
+}
+
+.developer-pfp {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--glass-border);
+}
+
