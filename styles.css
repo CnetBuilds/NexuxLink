@@ -636,6 +636,8 @@ body {
     margin: 1.5rem 0;
 }
 
+/* Replace the existing .link-image-preview and related styles with this: */
+
 .link-image-preview {
     width: 100%;
     height: 250px;
@@ -645,9 +647,6 @@ body {
     background: var(--glass);
     border: 1px solid var(--glass-border);
     margin: 1.5rem 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .link-image-preview img {
@@ -657,20 +656,43 @@ body {
     display: none;
 }
 
-.link-image-preview img[src] {
+.link-image-preview img.loaded {
     display: block;
 }
 
-.image-loading,
-.thinking {
+.image-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    gap: 1rem;
+    background: var(--glass);
+    transition: opacity 0.3s ease;
 }
 
+.link-image-preview img.loaded ~ .image-loading {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--glass-border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.image-loading p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
 .loading-spinner {
     width: 40px;
     height: 40px;
@@ -998,3 +1020,4 @@ body {
         padding: 0.5rem;
     }
 }
+
